@@ -54,7 +54,6 @@ public class LogicExp {
                     System.out.println("Wrong entered expression!");
                     System.exit(0);
                 }
-                int findLastOpenParent = 0;
                 for (int i = operationStack.size() - 1; i >= 0; i--) {
                     if (!operationStack.get(i).equals('(')) {
                         operationNumb.add(operationStack.get(i).toString());
@@ -63,42 +62,12 @@ public class LogicExp {
                     }
                 }
                 break;
-            case '*':
+            case '*','/','-','+':
                 if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
                         operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/'))) {
                     operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
                     operationStack.remove(operationStack.size() - 1);
-                    operationStack.add('*');
-                } else {
                     operationStack.add(operation);
-                }
-                break;
-            case '/':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
-                        operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/'))) {
-                    operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
-                    operationStack.remove(operationStack.size() - 1);
-                    operationStack.add('/');
-                } else {
-                    operationStack.add(operation);
-                }
-                break;
-            case '-':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
-                        operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/'))) {
-                    operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
-                    operationStack.remove(operationStack.size() - 1);
-                    operationStack.add('-');
-                } else {
-                    operationStack.add(operation);
-                }
-                break;
-            case '+':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
-                        operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/')))  {
-                    operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
-                    operationStack.remove(operationStack.size() - 1);
-                    operationStack.add('+');
                 } else {
                     operationStack.add(operation);
                 }
