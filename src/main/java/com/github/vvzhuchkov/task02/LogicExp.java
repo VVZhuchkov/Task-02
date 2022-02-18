@@ -84,7 +84,8 @@ public class LogicExp {
                 }
                 break;
             case '-':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+'))) {
+                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
+                        operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/'))) {
                     operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
                     operationStack.remove(operationStack.size() - 1);
                     operationStack.add('-');
@@ -93,7 +94,8 @@ public class LogicExp {
                 }
                 break;
             case '+':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+'))) {
+                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
+                        operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/')))  {
                     operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
                     operationStack.remove(operationStack.size() - 1);
                     operationStack.add('+');
