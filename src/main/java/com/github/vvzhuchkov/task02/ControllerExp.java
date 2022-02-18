@@ -1,12 +1,18 @@
 package com.github.vvzhuchkov.task02;
 
+import java.util.List;
+
 public class ControllerExp {
 
-    public void start(){
+    public static void start() {
         InputExp inputExp = new InputExp();
         LogicExp logicExp = new LogicExp();
         OutputExp outputExp = new OutputExp();
         String expression = inputExp.inputExpression();
-        logicExp.divideByParenthesis(expression);
+        logicExp.splitExp(expression);
+        List<Character> listOfOp = logicExp.getOperationStack();
+        List<String> listOfNumb = logicExp.getOperationNumb();
+        //outputExp.outputDividedByOp(listOfOp);
+        outputExp.outputDividedByNumb(listOfNumb);
     }
 }
