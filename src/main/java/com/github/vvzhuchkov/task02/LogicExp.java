@@ -5,8 +5,8 @@ import java.util.List;
 
 public class LogicExp {
 
-    private List<Character> operationStack = new ArrayList<>();
-    private List<String> operationNumb = new ArrayList<>();
+    private final List<Character> operationStack = new ArrayList<>();
+    private final List<String> operationNumb = new ArrayList<>();
     private StringBuilder stringBuilder;
 
     public List<String> getOperationNumb() {
@@ -57,14 +57,25 @@ public class LogicExp {
                 for (int i = operationStack.size() - 1; i >= 0; i--) {
                     if (!operationStack.get(i).equals('(')) {
                         operationNumb.add(operationStack.get(i).toString());
+                        operationStack.remove(i);
                     } else {
                         operationStack.remove(i);
                     }
                 }
                 break;
-            case '*','/','-','+':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+') ||
-                        operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/'))) {
+            case '*','/':
+                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/')))
+                {
+                    operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
+                    operationStack.remove(operationStack.size() - 1);
+                    operationStack.add(operation);
+                } else {
+                    operationStack.add(operation);
+                }
+                break;
+            case '-','+':
+                if (!operationStack.isEmpty() && ((operationStack.get(operationStack.size() - 1).equals('*') || operationStack.get(operationStack.size() - 1).equals('/'))
+                        || operationStack.get(operationStack.size() - 1).equals('-') || operationStack.get(operationStack.size() - 1).equals('+'))) {
                     operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
                     operationStack.remove(operationStack.size() - 1);
                     operationStack.add(operation);
