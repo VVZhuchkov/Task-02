@@ -4,16 +4,13 @@ import java.util.List;
 
 public class OutputExp {
 
-
-    public void outputDividedByOp (List<Character> expression){
-        for(Character op : expression){
+    public void outputPolandRec (List<String> expression){
+        for(String op : expression){
             System.out.print(op + " ");
         }
     }
 
-    public void outputDividedByNumb (List<String> expression){
-        for(String op : expression){
-            System.out.print(op + " ");
-        }
+    public void outputResultExp (Integer result){
+        System.out.println(result);
     }
 }

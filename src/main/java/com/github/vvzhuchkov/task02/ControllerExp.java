@@ -10,9 +10,8 @@ public class ControllerExp {
         OutputExp outputExp = new OutputExp();
         String expression = inputExp.inputExpression();
         logicExp.splitExp(expression);
-        List<Character> listOfOp = logicExp.getOperationStack();
         List<String> listOfNumb = logicExp.getOperationNumb();
-        //outputExp.outputDividedByOp(listOfOp);
-        outputExp.outputDividedByNumb(listOfNumb);
+        outputExp.outputPolandRec(listOfNumb);
+        outputExp.outputResultExp(logicExp.calculation(listOfNumb));
     }
 }
