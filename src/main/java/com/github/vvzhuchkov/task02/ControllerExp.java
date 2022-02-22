@@ -10,7 +10,7 @@ public class ControllerExp {
         OutputExp outputExp = new OutputExp();
         String expression = inputExp.inputExpression();
         logicExp.splitExp(expression);
-        List<String> listOfNumb = logicExp.getOperationNumb();
+        List<String> listOfNumb = logicExp.getOpNumb();
         outputExp.outputPolandRec(listOfNumb);
         outputExp.outputResultExp(logicExp.calculation(listOfNumb));
     }

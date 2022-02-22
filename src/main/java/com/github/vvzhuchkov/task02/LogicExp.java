@@ -5,17 +5,12 @@ import java.util.List;
 
 public class LogicExp {
 
-    private final List<Character> operationStack = new ArrayList<>();
-    private final List<String> operationNumb = new ArrayList<>();
-    private final List<Integer> listCalc = new ArrayList<>();
+    private final List<Character> opStack = new ArrayList<>();
+    private final List<String> opNumb = new ArrayList<>();
     private StringBuilder stringBuilder;
 
-    public List<String> getOperationNumb() {
-        return operationNumb;
-    }
-
-    public List<Character> getOperationStack() {
-        return operationStack;
+    public List<String> getOpNumb() {
+        return opNumb;
     }
 
     public void splitExp(String expression) {
@@ -26,17 +21,17 @@ public class LogicExp {
             } else if (stringBuilder.isEmpty()) {
                 polandRec(expression.charAt(i));
             } else {
-                operationNumb.add(stringBuilder.toString());
+                opNumb.add(stringBuilder.toString());
                 stringBuilder = new StringBuilder();
                 polandRec(expression.charAt(i));
             }
         }
         if (!stringBuilder.isEmpty()) {
-            operationNumb.add(stringBuilder.toString());
+            opNumb.add(stringBuilder.toString());
         }
-        if (!operationStack.isEmpty()) {
-            for (int i = operationStack.size() - 1; i >= 0; i--) {
-                operationNumb.add(operationStack.get(i).toString());
+        if (!opStack.isEmpty()) {
+            for (int i = opStack.size() - 1; i >= 0; i--) {
+                opNumb.add(opStack.get(i).toString());
             }
         }
     }
@@ -48,70 +43,82 @@ public class LogicExp {
     public void polandRec(Character operation) {
         switch (operation) {
             case '(':
-                operationStack.add(operation);
+                opStack.add(operation);
                 break;
             case ')':
-                if (!operationStack.contains('(')) {
+                if (!opStack.contains('(')) {
                     System.out.println("Wrong entered expression!");
                     System.exit(0);
                 }
-                for (int i = operationStack.size() - 1; i >= 0; i--) {
-                    if (!operationStack.get(i).equals('(')) {
-                        operationNumb.add(operationStack.get(i).toString());
-                        operationStack.remove(i);
+                for (int i = opStack.size() - 1; i >= 0; i--) {
+                    if (!opStack.get(i).equals('(')) {
+                        opNumb.add(opStack.get(i).toString());
+                        opStack.remove(i);
                     } else {
-                        operationStack.remove(i);
+                        opStack.remove(i);
+                        break;
                     }
                 }
                 break;
             case '*', '/':
-                if (!operationStack.isEmpty() && (operationStack.get(operationStack.size() - 1).equals('*') ||
-                        operationStack.get(operationStack.size() - 1).equals('/'))) {
-                    operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
-                    operationStack.remove(operationStack.size() - 1);
-                    operationStack.add(operation);
+                if (!opStack.isEmpty() && (opStack.get(opStack.size() - 1).equals('*') ||
+                        opStack.get(opStack.size() - 1).equals('/'))) {
+                    opNumb.add(opStack.get(opStack.size() - 1).toString());
+                    opStack.remove(opStack.size() - 1);
+                    opStack.add(operation);
                 } else {
-                    operationStack.add(operation);
+                    opStack.add(operation);
                 }
                 break;
             case '-', '+':
-                if (!operationStack.isEmpty() && ((operationStack.get(operationStack.size() - 1).equals('*')
-                        || operationStack.get(operationStack.size() - 1).equals('/'))
-                        || operationStack.get(operationStack.size() - 1).equals('-')
-                        || operationStack.get(operationStack.size() - 1).equals('+'))) {
-                    operationNumb.add(operationStack.get(operationStack.size() - 1).toString());
-                    operationStack.remove(operationStack.size() - 1);
-                    operationStack.add(operation);
+                if (!opStack.isEmpty() && ((opStack.get(opStack.size() - 1).equals('*')
+                        || opStack.get(opStack.size() - 1).equals('/'))
+                        || opStack.get(opStack.size() - 1).equals('-')
+                        || opStack.get(opStack.size() - 1).equals('+'))) {
+                    opNumb.add(opStack.get(opStack.size() - 1).toString());
+                    opStack.remove(opStack.size() - 1);
+                    opStack.add(operation);
                 } else {
-                    operationStack.add(operation);
+                    opStack.add(operation);
                 }
                 break;
             default:
-                System.out.println("Wrong entered expression. Use numbers, parenthesis, division, multiplication, plus, minus. Try again!");
+                System.out.println("Wrong entered expression. Use numbers, parenthesis, " +
+                        "division, multiplication, plus, minus. Try again!");
                 System.exit(0);
         }
     }
 
     public int calculation(List<String> polandRec) {
         int result = 0;
-        char sign = '+';
-   /*     for (int i = 0; i < polandRec.size(); i++) {
-            if (isDigit(polandRec.get(i))) {
-                listCalc.add(Integer.parseInt(polandRec.get(i)));
+        char sign;
+        List<Integer> listForCalc = new ArrayList<>();
+        for (String symbol : polandRec) {
+            if (isDigit(symbol)) {
+                listForCalc.add(Integer.parseInt(symbol));
             } else {
-                result = listCalc.get(i - 1) + sign + listCalc.get(i - 2);
+                int firstOp = listForCalc.get(listForCalc.size() - 2);
+                int secondOp = listForCalc.get(listForCalc.size() - 1);
+                sign = symbol.charAt(0);
+                switch (sign) {
+                    case '*' -> result = firstOp * secondOp;
+                    case '/' -> result = firstOp / secondOp;
+                    case '+' -> result = firstOp + secondOp;
+                    case '-' -> result = firstOp - secondOp;
+                    default -> {
+                        System.out.println("Wrong entered expression. Use numbers, parenthesis, division, " +
+                                "multiplication, plus, minus. Try again!");
+                        System.exit(0);
+                    }
+                }
+                listForCalc.remove(listForCalc.size() - 1);
+                listForCalc.remove(listForCalc.size() - 1);
+                listForCalc.add(result);
             }
         }
-        return result;*/
-        /*for (int i = 0; i < polandRec.size(); i++) {
-            if (!isDigit(polandRec.get(i))) {
-                sign = polandRec.get(i).charAt(0);
-                result = Integer.parseInt(polandRec.get(i - 1)) + Integer.parseInt(polandRec.get(i - 2));
-            }
-        }*/
-        result = ;
         return result;
     }
+
 
     private static boolean isDigit(String s) throws NumberFormatException {
         try {

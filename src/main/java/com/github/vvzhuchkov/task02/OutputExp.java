@@ -8,9 +8,10 @@ public class OutputExp {
         for(String op : expression){
             System.out.print(op + " ");
         }
+        System.out.println();
     }
 
     public void outputResultExp (Integer result){
-        System.out.println(result);
+        System.out.println("The result of entered expression is: " + result);
     }
 }
