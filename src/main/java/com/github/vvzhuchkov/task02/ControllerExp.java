@@ -4,14 +4,12 @@ import java.util.List;
 
 public class ControllerExp {
 
-    public static void start() {
-        InputExp inputExp = new InputExp();
+    public void calculation(String expression) {
         LogicExp logicExp = new LogicExp();
         OutputExp outputExp = new OutputExp();
-        String expression = inputExp.inputExpression();
+        logicExp.checkExp(expression);
         logicExp.splitExp(expression);
         List<String> listOfNumb = logicExp.getOpNumb();
-        outputExp.outputPolandRec(listOfNumb);
         outputExp.outputResultExp(logicExp.calculation(listOfNumb));
     }
 }

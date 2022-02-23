@@ -13,6 +13,10 @@ public class LogicExp {
         return opNumb;
     }
 
+    public void checkExp(String expression){
+
+    }
+
     public void splitExp(String expression) {
         stringBuilder = new StringBuilder();
         for (int i = 0; i < expression.length(); i++) {
