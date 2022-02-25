@@ -7,7 +7,7 @@ public class ControllerExp {
     public void calculation(String expression) {
         LogicExp logicExp = new LogicExp();
         OutputExp outputExp = new OutputExp();
-        logicExp.checkExp(expression);
+        logicExp.checkOrderParentheses(expression);
         logicExp.splitExp(expression);
         List<String> listOfNumb = logicExp.getOpNumb();
         outputExp.outputResultExp(logicExp.calculation(listOfNumb));

@@ -2,6 +2,8 @@ package com.github.vvzhuchkov.task02;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LogicExp {
 
@@ -13,8 +15,50 @@ public class LogicExp {
         return opNumb;
     }
 
-    public void checkExp(String expression){
+    public String checkSpaces(String expression) {
+        Pattern pattern = Pattern.compile("\\s");
+        Matcher matcher = pattern.matcher(expression);
+        while (matcher.find()) {
+            expression = matcher.replaceAll("");
+        }
+        return expression;
+    }
 
+    public void checkIncorrectSymbols (String expression){
+
+    }
+
+    public void checkOrderParentheses(String expression) {
+        char[] massExpress = expression.toCharArray();
+        int count = 0;
+        for (char express : massExpress) {
+            if (express == '(') {
+                count++;
+            }
+            if (express == ')') {
+                count--;
+            }
+        }
+        if (count != 0) {
+            throw new RuntimeException("Incorrect expression. Wrong parenthesis order or quantity.");
+        }
+    }
+
+    public void checkSymbOrder(String expression) {
+        char[] massExpress = expression.toCharArray();
+        Pattern pattern = Pattern.compile(".*[\\D].*");
+        int count = 0;
+        for (char express : massExpress) {
+            if (express == '(') {
+                count++;
+            }
+            if (express == ')') {
+                count--;
+            }
+        }
+        if (count != 0) {
+            throw new RuntimeException("Incorrect expression. Wrong parenthesis order or quantity.");
+        }
     }
 
     public void splitExp(String expression) {
