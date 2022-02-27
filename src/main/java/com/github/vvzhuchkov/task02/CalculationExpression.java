@@ -2,10 +2,8 @@ package com.github.vvzhuchkov.task02;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class LogicExp {
+public class CalculationExpression {
 
     private final List<Character> opStack = new ArrayList<>();
     private final List<String> opNumb = new ArrayList<>();
@@ -15,51 +13,6 @@ public class LogicExp {
         return opNumb;
     }
 
-    public String checkSpaces(String expression) {
-        Pattern pattern = Pattern.compile("\\s");
-        Matcher matcher = pattern.matcher(expression);
-        while (matcher.find()) {
-            expression = matcher.replaceAll("");
-        }
-        return expression;
-    }
-
-    public void checkIncorrectSymbols (String expression){
-
-    }
-
-    public void checkOrderParentheses(String expression) {
-        char[] massExpress = expression.toCharArray();
-        int count = 0;
-        for (char express : massExpress) {
-            if (express == '(') {
-                count++;
-            }
-            if (express == ')') {
-                count--;
-            }
-        }
-        if (count != 0) {
-            throw new RuntimeException("Incorrect expression. Wrong parenthesis order or quantity.");
-        }
-    }
-
-    public void checkSymbOrder(String expression) {
-        char[] massExpress = expression.toCharArray();
-        Pattern pattern = Pattern.compile(".*[\\D].*");
-        int count = 0;
-        for (char express : massExpress) {
-            if (express == '(') {
-                count++;
-            }
-            if (express == ')') {
-                count--;
-            }
-        }
-        if (count != 0) {
-            throw new RuntimeException("Incorrect expression. Wrong parenthesis order or quantity.");
-        }
-    }
 
     public void splitExp(String expression) {
         stringBuilder = new StringBuilder();
@@ -130,10 +83,6 @@ public class LogicExp {
                     opStack.add(operation);
                 }
                 break;
-            default:
-                System.out.println("Wrong entered expression. Use numbers, parenthesis, " +
-                        "division, multiplication, plus, minus. Try again!");
-                System.exit(0);
         }
     }
 
@@ -150,7 +99,12 @@ public class LogicExp {
                 sign = symbol.charAt(0);
                 switch (sign) {
                     case '*' -> result = firstOp * secondOp;
-                    case '/' -> result = firstOp / secondOp;
+                    case '/' -> {
+                        if (secondOp == 0) {
+                            throw new RuntimeException("Incorrect expression. Divide by zero unavailable in this version!");
+                        }
+                        result = firstOp / secondOp;
+                    }
                     case '+' -> result = firstOp + secondOp;
                     case '-' -> result = firstOp - secondOp;
                     default -> {
